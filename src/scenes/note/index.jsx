@@ -130,7 +130,7 @@ const Note = () => {
         }}>
 
 
-        <DataGrid checkboxSelection
+        <DataGrid 
           rows={notes}
           columns={columns} />
       </Box>
