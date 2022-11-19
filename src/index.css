@@ -33,3 +33,20 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .button-custom {
+    color: black;
+  }
+}
+@media (max-width:768px) {
+  .button-custom {
+    color: red;
+  }
+}
+@media (max-width:320px) {
+  .button-custom {
+    color: blue;
+  }
+}

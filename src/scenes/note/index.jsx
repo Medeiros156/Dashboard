@@ -12,20 +12,20 @@ const Note = () => {
   const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [notes, setNotes] = useState([])
-  
 
-  
+
+
   const handleFormSubmit = (values) => {
     console.log(values);
-    
+
     localStorage.setItem(values.id, values.note)
     values.id += 1
     setNotes(values.note)
     console.log(values);
     console.log(notes);
-    
-    
-    
+
+
+
   };
 
   const keepValues = (values) => {
@@ -35,12 +35,12 @@ const Note = () => {
     console.log(notes);
   }
 
-  
 
 
- /*  useEffect(() => {
-    notes.push(localStorage.getItem(values.id))
-  }, [values ]); */
+
+  /*  useEffect(() => {
+     notes.push(localStorage.getItem(values.id))
+   }, [values ]); */
 
 
   const columns = [
@@ -76,6 +76,7 @@ const Note = () => {
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                "& .customButton": {minWidth: isNonMobile ? undefined : "220px" }
               }}
             >
               <TextField
@@ -91,7 +92,7 @@ const Note = () => {
                 helperText={touched.note && errors.note}
                 sx={{ gridColumn: "span 3" }}
               />
-              <Button type="submit" color="secondary" variant="contained">
+              <Button className="customButton" type="submit" color="secondary" variant="contained">
                 Create New Note
               </Button>
 
@@ -127,10 +128,13 @@ const Note = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-columnHeaders": {
+            maxHeight: !isNonMobile ? "45px" :  undefined
+          },
         }}>
 
 
-        <DataGrid 
+        <DataGrid
           rows={notes}
           columns={columns} />
       </Box>
