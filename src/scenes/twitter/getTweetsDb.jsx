@@ -1,7 +1,8 @@
-
+import fetch from 'node-fetch';
 export const getTweetsDb = async (q) => {
   try {
-    const result = await fetch(`http://localhost:5000/twitter/tweets?q=${q}`);
+    // const result = await fetch(`http://localhost:5000/twitter/tweets?q=${q}`);
+    const result = await fetch(`https://back-fqrl.onrender.com/twitter/tweets?q=${q}`);
     const jsonResult = await result.json();
     // setData(jsonResult.data);
     console.log(jsonResult);
@@ -12,7 +13,7 @@ export const getTweetsDb = async (q) => {
 }
 export const getReferences = async () => {
   try {
-    const result = await fetch(`http://localhost:5000/twitter/ref`);
+    const result = await fetch(`https://back-fqrl.onrender.com/twitter/ref`);
     const jsonResult = await result.json();
     // setData(jsonResult.data);
     let refArr = []
