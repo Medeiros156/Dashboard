@@ -16,6 +16,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -40,11 +41,11 @@ const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  
+
   const [selected, setSelected] = useState("Dashboard");
   const [isCollapsed, setIsCollapsed] = useState(!isNonMobile);
 
-  
+
   return (
     <Box
       sx={{
@@ -63,7 +64,23 @@ const Sidebar = () => {
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
         },
-        
+        "@media screen and (max-width: 767px)": {
+
+          "& .pro-inner-item": {
+            padding: "5px 35px 5px 15px !important",
+          },
+          "& .MuiTypography-h6": {
+            margin: "15px 0 5px 15px!important"
+          },
+          
+
+          "& .pro-sidebar.collapsed": {
+            minWidth: "60px",
+            width: "60px",
+            transition: "all 0.3s"
+          }
+        }
+
       }}
     >
       <ProSidebar collapsed={isCollapsed}>
@@ -152,9 +169,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
+              title="Twitter App Db"
+              to="/twitter"
+              icon={<TwitterIcon />}
               selected={selected}
               setSelected={setSelected}
             />
