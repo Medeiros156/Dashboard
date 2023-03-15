@@ -6,12 +6,15 @@ import * as yup from "yup";
 import { tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
+import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
 
 const Note = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const ls = localStorage
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [notes, setNotes] = useState([])
+  const notesLs = JSON.parse(ls.getItem('notes')) || []
+  const [notes, setNotes] = useState(notesLs)
 
 
 
@@ -28,14 +31,22 @@ const Note = () => {
 
   };
 
-  const keepValues = (values) => {
-    console.log(values)
-    setNotes(notes => [...notes, values])
-    values.id += 1
+  
+  const keepValues = (values, {resetForm}) => {
+    const oldNotes = JSON.parse(ls.getItem('notes')) || []
+    const lastNote = oldNotes[oldNotes.length - 1]
+    const newNote = { id: lastNote ? lastNote.id + 1 : 1, note: values.note } 
+    const newNotes = [...oldNotes, newNote]
+    ls.setItem('notes', JSON.stringify(newNotes))
+    setNotes((notes) => [...notes, newNote])
     console.log(notes);
+    resetForm()
   }
-
-
+  const handleDelete = (id) => {
+    const updatedNotes = notes.filter((note) => note.id !== id);
+    ls.setItem('notes', JSON.stringify(updatedNotes));
+    setNotes(updatedNotes);
+  };
 
 
   /*  useEffect(() => {
@@ -49,6 +60,22 @@ const Note = () => {
       field: "note",
       headerName: "Note",
       flex: 1,
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      renderCell: (params) => (
+        <Button sx={{margin:'10px'}} variant="contained" color="error" onClick={() => handleDelete(params.row.id)}>
+          Delete
+        </Button>
+      ),
+      renderHeader: () => (
+        <Typography
+        sx={{paddingLeft:'15px'}}>
+          <DeleteOutlined />
+          
+        </Typography>
+      ),
     },
   ];
 
@@ -90,6 +117,7 @@ const Note = () => {
                 name="note"
                 error={!!touched.note && !!errors.note}
                 helperText={touched.note && errors.note}
+                autoComplete="off" 
                 sx={{ gridColumn: "span 3" }}
               />
               <Button className="customButton" type="submit" color="secondary" variant="contained">
@@ -136,7 +164,8 @@ const Note = () => {
 
         <DataGrid
           rows={notes}
-          columns={columns} />
+          columns={columns} 
+          getRowHeight={() => 'auto'}/>
       </Box>
     </Box>
 

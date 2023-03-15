@@ -1,4 +1,2 @@
-# React Admin Dashboard
-
-Completed React Admin Dashboard Repo
+Pagina React responsiva com alguns projetos.
 

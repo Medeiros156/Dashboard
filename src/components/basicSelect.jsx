@@ -23,10 +23,10 @@ const BasicSelect = ({ values,  onChange, selectedValue }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">User</InputLabel>
+        <InputLabel id="simple-select-label">User</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="simple-select-label"
+          id="simple-select"
           value={selectedValue}
           onChange={handleChange}
           label="selectUserTweets"

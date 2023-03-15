@@ -13,11 +13,19 @@ import BasicSelect from "../../components/basicSelect";
 const Twitter = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [userTweets, setUserTweets] = React.useState('CFoltao');
+  const [userTweets, setUserTweets] = React.useState('folha');
   const [rowData, setRowData] = React.useState([]);
 
-  const [ref, setRef] = React.useState([]);
 
+  // async function fetchdata() {
+  //   const refData = ['JornalOGlobo', 'folha', 'britneyspears', 'Anitta', 'KimKardashian', 'MariahCarey', 'Cristiano', 'Casemiro', 'Benzema', 'neymarjr', 'BarackObama', 'NASA']
+  //   console.log(refData);
+  //   return refData
+  // }
+
+  // const [ref, setRef] = useState(() => fetchdata());
+
+  const [ref, setRef] = React.useState([]);
   useEffect(() => {
     const fetchRef = async () => {
       const refData = await getReferences();
@@ -44,21 +52,13 @@ const Twitter = () => {
   }, [userTweets]);
 
   const handleChangeGrid = async (e) => {
-    // setRowData(getTweetsDb(userTweets))
-    // console.log(rowData);
 
   };
   const handleChange = async (event) => {
-    // const newdata = await getTweetsDb(userTweets)
-    // setRowData(newdata)
     setUserTweets(event.target.value);
-    // rowData =  await getTweetsDb(userTweets)
-    // console.log(userTweets);
 
 
   };
-  // console.log(userTweets);
-  // console.log(rowData);
 
 
   const columns = [
@@ -81,21 +81,21 @@ const Twitter = () => {
     { field: "tweetUrl", headerName: "Tweet Url", flex: .1, renderCell: (params) => <a href={params.row.tweetUrl}>TweetUrl</a> },
     { field: "text", headerName: "Text", flex: .2 },
     {
-      field: "mediaUrl", headerName: "Media URL", flex: .2, renderCell: (params) => {
+      field: "mediaUrl", headerName: "Medias", flex: .2, renderCell: (params) => {
         if (Array.isArray(params.row.mediaUrl)) {
           if (params.row.mediaUrl && params.row.mediaUrl[0] && params.row.mediaUrl[1] !== null || undefined) {
             const mediaLinks = params.row.mediaUrl.map((mediaUrl, i) => {
               return (
                 <React.Fragment key={i}>
-                  <a href={mediaUrl}> media{i + 1} _ </a>
+                  <a href={mediaUrl}> <img src={mediaUrl} ></img> </a>
 
                 </React.Fragment>
               )/* <a href={mediaUrl}>{mediaUrl}</a>; */
             });
             return mediaLinks
           }
-        } else {
-          return <a href={params.row.mediaUrl}>{params.row.mediaUrl}</a>;
+        } else if (params.row.mediaUrl !== null || undefined) {
+          return <a href={params.row.mediaUrl}>Video</a>;
         }
       }
     },
@@ -129,7 +129,8 @@ const Twitter = () => {
               const mediaLinks = params.row.referenced_tweet_url.mediaUrl.map((mediaUrl, i) => {
                 return (
                   <React.Fragment key={i}>
-                    <a href={mediaUrl}> media{i + 1} _ </a>
+                    <a href={mediaUrl}> <img src={mediaUrl} ></img></a>
+
 
                   </React.Fragment>
                 )/* <a href={mediaUrl}>{mediaUrl}</a>; */
@@ -137,19 +138,11 @@ const Twitter = () => {
               return mediaLinks
             }
           } else {
-            return <a href={params.row.referenced_tweet_url.mediaUrl}>media</a>;
+            return <a href={params.row.referenced_tweet_url.mediaUrl}>Video</a>;
           }
         }
       }
 
-
-      // renderCell: (params) => {
-      //   if (params.row.referenced_tweet_url && params.row.referenced_tweet_url.mediaUrl) {
-      //     return <a href={params.row.referenced_tweet_url.mediaUrl}>{params.row.referenced_tweet_url.mediaUrl}</a>;
-      //   } else {
-      //     return "N/A";
-      //   }
-      // }
     },
     { field: "referenced_tweets", headerName: "Referenced Tweet", hide: true },
     { field: "in_reply_to_user_id", headerName: "In Reply To User ID", hide: true }];
@@ -219,6 +212,7 @@ const Twitter = () => {
             overflow: "hidden",
             whiteSpace: "nowrap"
           },
+          '& img': { maxWidth: '80px' }
         }}
       >
 
@@ -237,6 +231,7 @@ const Twitter = () => {
             '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px' },
             '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px' },
             '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '28px' },
+
 
           }}
           rows={rowData}
