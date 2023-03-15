@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-import { tokens } from "../../theme";
+import { tokens, ColorModeContext } from "../../theme";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
 
@@ -31,6 +34,7 @@ const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("");
+  const colorMode = useContext(ColorModeContext);
 
   const [selected, setSelected] = useState("note");
   const [isCollapsed, setIsCollapsed] = useState(!isNonMobile);
@@ -54,12 +58,13 @@ const Sidebar = () => {
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
         },
-        
+
 
       }}
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
+
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -105,7 +110,7 @@ const Sidebar = () => {
             <Item
               title="Calculator"
               to="/calculator"
-              icon={<NoteAltIcon />}
+              icon={<CalculateIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -117,11 +122,18 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-             
+            <IconButton onClick={colorMode.toggleColorMode}>
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlinedIcon />
+              ) : (
+                <LightModeOutlinedIcon />
+              )}
+            </IconButton>
           </Box>
         </Menu>
       </ProSidebar>
     </Box>
+
   );
 };
 

@@ -5,7 +5,7 @@ import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import CalculateIcon from '@mui/icons-material/Calculate';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
 const Topbar = ({}) => {
@@ -23,9 +23,13 @@ const Topbar = ({}) => {
     navigate("/note");
     
   };
+  const handleCalculatorIconClick = () => {
+    navigate("/calculator");
+    
+  };
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box display="flex" justifyContent="space-between" px={1}>
       
       
 
@@ -45,8 +49,8 @@ const Topbar = ({}) => {
         <IconButton  onClick={handleNoteIconClick} >
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton>
-          <PersonOutlinedIcon />
+        <IconButton  onClick={handleCalculatorIconClick}>
+          <CalculateIcon />
         </IconButton>
       </Box>
     </Box>
